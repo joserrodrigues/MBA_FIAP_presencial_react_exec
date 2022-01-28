@@ -1,36 +1,51 @@
-import React from 'react';
-import { Button, Grid, Stack } from '@mui/material';
+import * as React from 'react';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import CustomCards from '../../Components/Card/CustomCards';
 import './Home.css'
 
-const HomeView = ({ count, statusPlay, onStart, onPause, onStop}) => {
+export default function HomeView({ person }) {
 
-    let buttons = [];
-
-    console.log(statusPlay);
-    if (statusPlay === 0){
-        buttons.push(<Button key={1} text={"Iniciar"} variant="outlined" color="error" onClick={() => onStart()}>Iniciar</Button>);
-    } else if (statusPlay === 1){
-        buttons.push(<Button key={2} text={"Pausar"} variant="outlined" color="error" onClick={() => onPause()}> Pausar</Button>);
-        buttons.push(<Button key={3} text={"Parar"} variant="outlined" color="error" onClick={() => onStop()}> Parar</Button>);  
-    } else {
-        buttons.push(<Button key={1} text={"Despausar"} variant="outlined" color="error" onClick={() => onStart()} >Despausar</Button>);
-        buttons.push(<Button key={2} text={"Parar"} variant="outlined" color="error" onClick={() => onStop()} >Parar</Button>);        
+    let arrayCards = [];
+    if (person.data) {
+        person.data.persons.forEach(element => {
+            arrayCards.push(
+                <Grid item xs={12} md={6} lg={3} key={element.id} >
+                    <CustomCards person={element} />
+                </Grid>);
+        });
     }
-    return (
-        <Grid container spacing={2} direction="column"
-            justifyContent="center"
-            alignItems="center"
-            className='container'>
-            <Grid item>
-                <div className='text'>Count {count}</div>
-            </Grid>
-            <Grid item xs>
-                <Stack direction="row" spacing={10}>
-                    {buttons}
-                </Stack>
-            </Grid>
-        </Grid>
-    );
-};
 
-export default HomeView;
+    let info = null;
+    if (person.loading) {
+        info = (
+            <div className='infoClass'>
+                <CircularProgress />
+            </div>
+        )
+    } else if (person.error != "") {
+        info = (
+            <div className='infoClass'>
+                <Typography gutterBottom variant="h5" component="div">
+                    {person.error}
+                </Typography>
+            </div>
+        )
+    } else {
+        info = (
+            <Grid
+                container
+                spacing={5}>
+                {arrayCards}
+            </Grid>
+        )
+    }
+
+    return (
+        <>
+            {info}
+        </>
+
+    );
+}
