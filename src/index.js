@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import HomeController from './Screens/Home/HomeController';
+
+import { BrowserRouter } from "react-router-dom";
+import Router from "./Routes/routes";
+import { InfoContextProvider } from './store/InfoContext';
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <HomeController />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <InfoContextProvider>
+      <Router />
+    </InfoContextProvider>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
