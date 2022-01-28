@@ -35,12 +35,13 @@ const RedditTextField = styled((props) => (
     }
 }));
 
-const CustomTextField = ({ label, defaultValue, onChange }) => {
+const CustomTextField = ({ label, defaultValue, onChange, type }) => {
     return (
         <RedditTextField
             label={label}
             defaultValue={defaultValue}
             variant="filled"
+            type={type}
             style={{ marginTop: 11 }}
             onChange={onChange}
         />

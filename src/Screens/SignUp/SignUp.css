@@ -1,0 +1,16 @@
+html, body {
+  background-color: black !important;
+}
+
+.boxLogin{
+    border: #ed145b 1px solid;
+    padding: 40px !important;
+    margin-top: 150px !important;
+    border-radius: 50px;
+}
+
+.textButton{
+    font-size: 11px;
+    text-decoration: underline;
+    cursor: pointer;
+}

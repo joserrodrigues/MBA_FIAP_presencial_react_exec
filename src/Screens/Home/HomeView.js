@@ -3,7 +3,6 @@ import { Grid, Typography, Alert, Dialog, DialogTitle, DialogContent, DialogCont
 import MaterialTable from 'material-table';
 import './Home.css'
 import CustomButton from '../../Component/CustomButton/CustomButton';
-import { InfoContext } from "../../store/InfoContext";
 
 
 export default function HomeView({ loading, onChangePage, getDataPage, onAddPage, onEditPage, 
@@ -11,9 +10,6 @@ export default function HomeView({ loading, onChangePage, getDataPage, onAddPage
     isShowDialog, onConfirmDelete, onClosePopup }) {
 
     let name = "";
-
-    const context = useContext(InfoContext);
-    
     const columns = [
         { title: 'SobreNome', field: 'lastName', },
         { title: 'Nome', field: 'firstName' },
@@ -71,7 +67,7 @@ export default function HomeView({ loading, onChangePage, getDataPage, onAddPage
             alignItems="center">
             {message}
             <Typography xs={12} gutterBottom variant="h3" className="text">
-                Lista de Colaboradores, {context.info}
+                Lista de Colaboradores
             </Typography>
             <Grid item xs={12} className='divTopButton'>
                 <CustomButton onClick={onAddPage}>Adicionar Colaborador</CustomButton>

@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import useAPI from '../../Services/APIs/Common/useAPI';
 import persons from '../../Services/APIs/Persons/Persons';
 import HomeView from './HomeView';
 import { geolocated } from "react-geolocated";
 import { useNavigate } from 'react-router-dom';
 import Header from '../../Component/Header/Header';
+import { InfoContext } from '../../store/InfoContext';
 
 const HomeController = ({ coords, isGeolocationAvailable, isGeolocationEnabled }) => {
 
@@ -13,6 +14,8 @@ const HomeController = ({ coords, isGeolocationAvailable, isGeolocationEnabled }
     const tableRef = useRef(null);
     const userCoordinates = useRef(null);
     const infoDelete = useRef(null);
+
+    const { tokenLogin } = useContext(InfoContext);
 
     const [connectMessage, setConnectMessage] = useState("");
     const [connectCode, setConnectCode] = useState(0);
@@ -65,7 +68,7 @@ const HomeController = ({ coords, isGeolocationAvailable, isGeolocationEnabled }
     const onConfirmDelete = () => {
         setIsLoadingDelete(true);
         setIsShowDialog(false);
-        deletePersonsAPI.requestPromise(infoDelete.current._id)
+        deletePersonsAPI.requestPromise(infoDelete.current._id, tokenLogin)
             .then(info => {
                 setConnectMessage("Colaborador removido com sucesso");
                 setConnectCode(1);
@@ -101,7 +104,7 @@ const HomeController = ({ coords, isGeolocationAvailable, isGeolocationEnabled }
             if (query.search !== undefined && query.search !== "") {
                 info += `&search=${query.search}`
             }
-            getPersonsGetAPI.requestPromise(info)
+            getPersonsGetAPI.requestPromise(info, tokenLogin)
                 .then(info => {
                     console.log(info);
                     resolve({

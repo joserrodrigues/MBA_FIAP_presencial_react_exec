@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import AddView from './AddView';
 import * as Yup from "yup";
 import "yup-phone";
 import useAPI from '../../Services/APIs/Common/useAPI';
 import persons from '../../Services/APIs/Persons/Persons';
-
-
+import { InfoContext } from '../../store/InfoContext';
 
 const AddController = () => {
 
@@ -16,6 +15,7 @@ const AddController = () => {
     const [connectMessage, setConnectMessage] = useState("");
     const [connectCode, setConnectCode] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const { tokenLogin } = useContext(InfoContext);
     const { infoID } = useParams();
 
     let infoData = null;
@@ -48,7 +48,7 @@ const AddController = () => {
 
         setIsLoading(true);
         if (infoData != null){
-            editPersonsAPI.requestPromise(infoID, infoSend)
+            editPersonsAPI.requestPromise(infoID, infoSend, tokenLogin)
                 .then(info => {
                     console.log(info);
                     setIsLoading(false);
@@ -64,7 +64,7 @@ const AddController = () => {
                     setConnectMessage("O servidor retornou um erro= " + error.response.status);
                 })
         } else {
-            addPersonsAPI.requestPromise(infoSend)
+            addPersonsAPI.requestPromise(infoSend, tokenLogin)
                 .then(info => {
                     console.log(info);
                     setIsLoading(false);
